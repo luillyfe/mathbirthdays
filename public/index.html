@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/overcast/jquery-ui.css"/>
+
+    <style>
+        body {
+            background: #f5f5f5;
+        }
+        #wrapper {
+            font: 20px Calibri;
+            width: 100px;
+            margin: 0 auto;
+        }
+    </style>
+
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+
+    <title>Math Birthday</title>
+</head>
+<body ng-app="mathBirthday">
+    <main role="content">
+        <div ui-view></div>
+    </main>
+
+    <script type="text/javascript">
+        'use strict';
+
+        angular.module('mathBirthday', ['ui.router'])
+
+            .config(['$stateProvider', '$urlRouterProvider',
+                function($stateProvider, $urlRouterProvider) {
+                    $urlRouterProvider.otherwise('/home');
+
+                    $stateProvider
+                        .state('home', {
+                            url: '/home',
+                            templateUrl: 'mathBirthday.html',
+                            controllerAs: 'mathBirthday'
+                        })
+                }]);
+
+        angular.module('mathBirthday').directive("datepicker", function () {
+            return {
+                restrict: "A",
+                require: "ngModel",
+                link: function (scope, elem, attrs, ngModelCtrl) {
+                    var updateModel = function (dateText) {
+                        scope.$apply(function () {
+                            ngModelCtrl.$setViewValue(upComingMathBirthday(dateText));
+                        });
+                    };
+                    var options = {
+                        dateFormat: "mm/dd/yy",
+                        onSelect: function (dateText) {
+                            updateModel(dateText);
+                        },
+                        maxDate: '0'
+                    };
+                    elem.datepicker(options);
+
+                    var upComingMathBirthday = function (dateText) {
+                        var birthday = moment(Date.parse(dateText));
+                        var today = moment(Date.now());
+                        var currentMathBirthday = Math.pow(10, today.diff(birthday, 'days'));
+
+                        return Math.pow(10, today.diff(birthday, 'days'));
+                    };
+                }
+            }
+        });
+
+        angular.module('mathBirthday').filter('formatMathBirthday', function () {
+            return function (days) {
+                var weeks = days / 7;
+                if (isNaN(weeks)) return "";
+
+                return Number.isInteger(weeks)? weeks : Math.round(days / 7) + " around";
+            };
+        });
+    </script>
+</body>
+</html>

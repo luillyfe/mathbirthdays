@@ -1,0 +1,26 @@
+{
+  "name": "mathbirthdays",
+  "version": "1.0.0",
+  "description": "Mathbirthdays is a site that wants to help people celebrate their special \"math birthdays.\" A \"math birthday\" is a date that is 10^n days after the day they were born. On your first math birthday you are 10 days old, and on your second you are 100 days old, and on your third you are 1000 days old, which is almost 3 years old.",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.14.0",
+    "logger": "^0.0.1",
+    "morgan": "^1.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luillyfe/mathbirthdays.git"
+  },
+  "author": "Fermin Blanco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luillyfe/mathbirthdays/issues"
+  },
+  "homepage": "https://github.com/luillyfe/mathbirthdays#readme"
+}
