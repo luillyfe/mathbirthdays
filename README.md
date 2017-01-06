@@ -9,6 +9,11 @@ You need to install NodeJs and Bower.
 npm i
 ```
 
+## Start the app
+```
+npm start
+```
+
 ## Live app
 http://mathbirthday-154702.appspot-preview.com/#!/home
 
