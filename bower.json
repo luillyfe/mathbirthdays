@@ -8,6 +8,9 @@
     "angular": "^1.6.1",
     "angular-ui-router": "^0.3.2",
     "jquery-ui": "^1.12.1",
-    "moment": "^2.17.1"
+    "moment": "^2.17.1",
+    "angular-animate": "^1.6.2",
+    "angular-aria": "^1.6.2",
+    "angular-material": "^1.1.3"
   }
 }

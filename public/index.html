@@ -4,143 +4,56 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate your next Math bithday">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="bower_components/jquery-ui/themes/overcast/jquery-ui.css"/>
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+    <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 
     <style>
         @import url(https://fonts.googleapis.com/css?family=Roboto);
 
-        html, body, main, input, label, div {
+        html, body, main, #content {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            height: 100%;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
-        body {
+        .wrapper {
             background: #f5f5f5;
+            background-repeat: round;
             background-image: url("/assets/alltherooms.jpg");
-            background-size: 100%;
-        }
-        main {
-            display: -webkit-flex;
-            display: flex;
-            -webkit-flex-flow: row wrap;
-            flex-flow: row wrap;
-            -webkit-flex-direction: column;
-            flex-direction: column;
-            -webkit-justify-content: flex-end;
+            align-items: center;
             justify-content: center;
-
-            font-size: 2em;
-            padding: 0.5em 0;
-
-            border-radius: 10px 10px 0 0;
-            border-style: solid;
-            border-color: #ffffff;
-            margin-bottom: 5%;
-            margin: 0 10%;
-            background-color: #f0ecec;
         }
-        #wrapper {
-            font-weight: 300;
-            font-size: 2em;
-            font-family: Roboto;
-            margin: 0.5em 0.25em;
-            display: inline-block;
-            color: #212121;
-            padding: 5%;
-            width: 100%;
-
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .datepicker {
-            order: 3;
-            font-size: 0.5em;
-            margin: 2% 30%;
-        }
-        .birthday {
-            order: 1;
-        }
-        label {
-            order: 2;
-        }
-        @media screen and (max-width: 475px) {
-            .ui-widget.ui-widget-content {
-                width: 60%;
-                height: 30%;
-            }
-        }
-        @media screen and (min-width: 375px) {
-            #wrapper {
-                font-size: 1em;
-            }
-            .datepicker {
-                margin-left: 20%;
-            }
-            main {
-                margin-top: 20%;
-            }
-        }
-        @media screen and (min-width: 475px) {
-            #wrapper {
-                font-size: 1em;
-            }
-        }
-        @media screen and (min-width: 625px) {
-            #wrapper {
-                font-size: 2em;
-                padding-top: 0;
-                margin-top: 0;
-            }
-            .birthday {
-                margin-top: 0;
-            }
-            main {
-                margin-top: 0;
-            }
-        }
-        @media screen and (min-width: 768px) {
-            #wrapper {
-                font-size: 2em;
-            }
-            .birthday {
-                padding-top: 5%;
-            }
-            label {
-                margin-right: 20%;
-            }
-        }
-        @media screen and (min-width: 1024px) {
-            #wrapper > input {
-                width: 100%;
-                margin-left: 25%;
-            }
-            label {
-                width: 100%;
-                margin-left: 0;
-                margin-right: 0;
-                font-size: 0.9em;
-            }
+        md-content {
+            max-width: 50%;
+            background-color: lightblue;
         }
     </style>
-
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/moment/moment.js"></script>
-
     <title>Math Birthday</title>
 </head>
 <body ng-app="mathBirthday">
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
     <main role="content">
-        <div ui-view></div>
+        <div id="content" layout="column" ui-view></div>
     </main>
 
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
     <script type="text/javascript">
         'use strict';
 
-        angular.module('mathBirthday', ['ui.router'])
+        angular.module('mathBirthday', ['ui.router', 'ngMaterial'])
 
             .config(['$stateProvider', '$urlRouterProvider',
                 function($stateProvider, $urlRouterProvider) {
@@ -149,55 +62,26 @@
                     $stateProvider
                         .state('home', {
                             url: '/home',
-                            template: "<div id='wrapper'>" +
-                                            "<p class='birthday'>Your next math birthday is your {{mathBirthday || '00'}}-day-old on {{mathBirthday | formatMathBirthday}} date</p>" +
-                                            "<label>Please, enter your birthday: </label> <input type='text' ng-model='mathBirthday' datepicker class='datepicker' />" +
-                                      "</div>",
-                            controllerAs: 'mathBirthday'
-                        })
-                }]);
+                            templateUrl: "datepicker.html",
+                            controllerAs: 'mainCtrl',
+                            controller: function () {
+                                this.birthday = new Date(Date.now());
+                                this.mathBirthday = "select your age!";
+                                this.nextMathBirthday = "SooN!";
 
-        angular.module('mathBirthday').directive("datepicker", function () {
-            return {
-                restrict: "A",
-                require: "ngModel",
-                link: function (scope, elem, attrs, ngModelCtrl) {
-                    var updateModel = function (dateText) {
-                        scope.$apply(function () {
-                            ngModelCtrl.$setViewValue(upComingMathBirthday(dateText));
+                                this.calcMathBirthday = function () {
+                                    var daysAlive = moment(Date.now()).diff(moment(this.birthday), 'days');
+
+                                    this.mathBirthday = daysAlive.toString().length;
+                                    this.getNextDate(daysAlive);
+                                };
+
+                                this.getNextDate = function (daysAlive) {
+                                    this.nextMathBirthday = moment(Date.now()).add(Math.pow(10, this.mathBirthday) - daysAlive, 'days').format('DD/MM/YYYY');
+                                };
+                            }
                         });
-                    };
-                    var options = {
-                        dateFormat: "mm/dd/yy",
-                        onSelect: function (dateText) {
-                            updateModel(dateText);
-                        },
-                        maxDate: '0',
-                        changeYear: true,
-                        changeMonth: true,
-                        showAnim: 'slideDown'
-                    };
-                    elem.datepicker(options);
-
-                    var upComingMathBirthday = function (dateText) {
-                        var birthday = moment(Date.parse(dateText));
-                        var today = moment(Date.now());
-                        var currentMathBirthday = Math.pow(10, today.diff(birthday, 'days'));
-
-                        return Math.pow(10, today.diff(birthday, 'days'));
-                    };
-                }
-            }
-        });
-
-        angular.module('mathBirthday').filter('formatMathBirthday', function () {
-            return function (days) {
-                var weeks = days / 7;
-                if (isNaN(weeks)) return "";
-
-                return Number.isInteger(weeks)? weeks : Math.round(days / 7) + " around";
-            };
-        });
+                }]);
     </script>
 </body>
 </html>
