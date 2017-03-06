@@ -31,6 +31,18 @@
         md-content {
             max-width: 50%;
             background-color: lightblue;
+
+            border-radius: 10px 10px 0 0;
+            border-style: solid;
+            border-color: #ffffff;
+            margin-bottom: 5%;
+            margin: 0 10%;
+            background-color: #f0ecec;
+        }
+        @media screen and (max-width: 768px) {
+            .wrapper {
+                background-repeat: no-repeat;
+            }
         }
     </style>
     <title>Math Birthday</title>
@@ -62,7 +74,18 @@
                     $stateProvider
                         .state('home', {
                             url: '/home',
-                            templateUrl: "datepicker.html",
+                            template: "<div class='wrapper' layout='row' flex>" +
+                                        "<md-content class='md-whiteframe-4dp' layout-padding ng-cloak flex>" +
+                                            "<h2>Math birthday</h2>" +
+                                            "<p class='birthday'>Your next math birthday is your {{ mainCtrl.mathBirthday }} age on {{ mainCtrl.nextMathBirthday }} date</p>" +
+                                            "<div layout-gt-xs='row'>" +
+                                                "<div flex-gt-xs>" +
+                                                    "<h4>Select you birthday</h4>" +
+                                                    "<md-datepicker ng-model='mainCtrl.birthday' ng-change='mainCtrl.calcMathBirthday()' md-placeholder='Enter date'></md-datepicker>" +
+                                                "</div>" +
+                                            "</div>" +
+                                        "</md-content>" +
+                                    "</div>",
                             controllerAs: 'mainCtrl',
                             controller: "MainCtrl"
                         });
