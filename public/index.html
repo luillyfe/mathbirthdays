@@ -64,24 +64,26 @@
                             url: '/home',
                             templateUrl: "datepicker.html",
                             controllerAs: 'mainCtrl',
-                            controller: function () {
-                                this.birthday = new Date(Date.now());
-                                this.mathBirthday = "select your age!";
-                                this.nextMathBirthday = "SooN!";
-
-                                this.calcMathBirthday = function () {
-                                    var daysAlive = moment(Date.now()).diff(moment(this.birthday), 'days');
-
-                                    this.mathBirthday = daysAlive.toString().length;
-                                    this.getNextDate(daysAlive);
-                                };
-
-                                this.getNextDate = function (daysAlive) {
-                                    this.nextMathBirthday = moment(Date.now()).add(Math.pow(10, this.mathBirthday) - daysAlive, 'days').format('DD/MM/YYYY');
-                                };
-                            }
+                            controller: "MainCtrl"
                         });
                 }]);
+
+        angular.module('mathBirthday').controller('MainCtrl', function () {
+            this.birthday = new Date(Date.now());
+            this.mathBirthday = "select your age!";
+            this.nextMathBirthday = "SooN!";
+
+            this.calcMathBirthday = function () {
+                var daysAlive = moment(Date.now()).diff(moment(this.birthday), 'days');
+
+                this.mathBirthday = daysAlive.toString().length;
+                this.getNextDate(daysAlive);
+            };
+
+            this.getNextDate = function (daysAlive) {
+                this.nextMathBirthday = moment(Date.now()).add(Math.pow(10, this.mathBirthday) - daysAlive, 'days').format('DD/MM/YYYY');
+            };
+        });
     </script>
 </body>
 </html>
